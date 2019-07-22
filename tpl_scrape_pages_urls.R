@@ -32,8 +32,20 @@ while (urlpdfloop < plist + 1) {
   Sys.sleep(runif(1, 1.5, 3))
   #find all interesting elements first.
   url_pdf_temp1 <- remDr$findElement(using = "xpath", ".//*[@class='btn fileURL']") #we get and store the URL
-  #dataFile <- remDr$findElements(using = "xpath", ".//*[@class='listingItemLI detailListingItem']")
-  dataFile <- remDr$findElements(using = "xpath", ".//*[@class='listingItemLI detailListingItem']")
+  
+  dataFile_func <- function(i) {
+    Sys.sleep(0.86)
+    tryCatch( {
+      testdataFile <- remDr$findElements(using = "xpath", ".//*[@class='listingItemLI detailListingItem']")
+      }
+      , warning = function(e){
+        Sys.sleep(0.86)
+        testdataFile <<- remDr$findElements(using = "xpath", ".//*[@class='listingItemLI detailListingItem']")}
+      , error = function(e){Sys.sleep(0.86)
+        testdataFile <<- remDr$findElements(using = "xpath", ".//*[@class='listingItemLI detailListingItem']")})
+    return(testdataFile)}
+  dataFile <- dataFile_func()
+
   Sys.sleep(1)
   dataFile_temp <- dataFile
   dataFile_temp <- unlist(sapply(dataFile_temp, function(x) {x$getElementText()}))
