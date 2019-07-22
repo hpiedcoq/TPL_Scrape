@@ -2,21 +2,21 @@ setwd("~/Téléchargements/tpl-scrape/TPL_Scrape")
 source('constantes.R')
 Sys.sleep(runif(1, 1.5, 5))
 
-# #Open Connection with displayed browse. Good for debugging
-# remDr <- remoteDriver(remoteServerAddr = "0.0.0.0"
-#                       , port = 4444
-#                       , browserName = "firefox"
-#                       )
-
-
-#Open Connection headless
+#Open Connection with displayed browse. Good for debugging
 remDr <- remoteDriver(remoteServerAddr = "0.0.0.0"
                       , port = 4444
                       , browserName = "firefox"
-                      , extraCapabilities = list(
-                        "moz:firefoxOptions" = list(
-                          args = list('--headless')))
-)
+                      )
+
+
+# #Open Connection headless
+# remDr <- remoteDriver(remoteServerAddr = "0.0.0.0"
+#                       , port = 4444
+#                       , browserName = "firefox"
+#                       , extraCapabilities = list(
+#                         "moz:firefoxOptions" = list(
+#                           args = list('--headless')))
+# )
 
 remDr$open()
 remDr$navigate(url_base)
