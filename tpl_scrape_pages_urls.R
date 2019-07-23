@@ -52,7 +52,7 @@ while (urlpdfloop < plist + 1) {
   colnames(title_temp) <- c('Titre')
   title <- rbind(title,title_temp)
   
-  language_temp <- remDr$findElement(using = "xpath", ".//*[@class='file-details btn-default trsp-btn active']")
+  language_temp <- remDr$findElement(using = "css", "a.file-details.btn-default.trsp-btn.active")
   Sys.sleep(1)
   language_temp <- language_temp$getElementText()
   language_temp <- as.data.frame(language_temp)
