@@ -45,7 +45,7 @@ while (urlpdfloop < plist + 1) {
   colnames(dataFile_temp) <- dataFile_temp[1,]
   dataFile_temp <- dataFile_temp[-1,]
   
-  title_temp <-remDr$findElements(using = "xpath", ".//*[@class='itemTitle']")
+  title_temp <-remDr$findElements(using = "css", "h4.itemTitle")
   Sys.sleep(1)
   title_temp <- (unlist(sapply(title_temp, function(x) {x$getElementText()})))[1]
   title_temp <- as.data.frame(title_temp)
