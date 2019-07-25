@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://www.stl-tsl.org/themes/stl/images/STL_EnglishLogo.svg" title="STL-TSL Logo">
+ </p>
+
 # TPL_Scrape
 A R script using Selenium to scrape data from the Special Tribunal for Lebanon.
 
