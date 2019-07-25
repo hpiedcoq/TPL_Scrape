@@ -72,7 +72,8 @@ while (p < nbUrls+1){
     dir.create(output_dir)
   }
   filenamedir <-paste0(output_dir,'/',filename)
-  download.file(file, destfile = filenamedir, method = "wget")
+  options(HTTPUserAgent='Mozilla/5.0 (X11; Linux i686 on x86_64; rv:10.0) Gecko/20100101 Firefox/68.0')
+  download.file(file, destfile = filenamedir, method = "libcurl")
   #we pause more or less 1.5s between every DL
   Sys.sleep(runif(1, 1, 2))
   gc()
