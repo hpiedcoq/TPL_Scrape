@@ -3,21 +3,21 @@ maindir <- getwd()
 source('constantes.R')
 Sys.sleep(runif(1, 1.5, 5))
 
-# #Open Connection with displayed browse. Good for debugging
-# remDr <- remoteDriver(remoteServerAddr = "0.0.0.0"
-#                       , port = 4444
-#                       , browserName = "firefox"
-#                       )
-
-
-#Open Connection headless
+#Open Connection with displayed browse. Good for debugging
 remDr <- remoteDriver(remoteServerAddr = "0.0.0.0"
                       , port = 4444
                       , browserName = "firefox"
-                      , extraCapabilities = list(
-                        "moz:firefoxOptions" = list(
-                          args = list('--headless')))
-)
+                      )
+
+
+# #Open Connection headless
+# remDr <- remoteDriver(remoteServerAddr = "0.0.0.0"
+#                       , port = 4444
+#                       , browserName = "firefox"
+#                       , extraCapabilities = list(
+#                         "moz:firefoxOptions" = list(
+#                           args = list('--headless')))
+# )
 
 remDr$open()
 remDr$navigate(url_base)
@@ -53,14 +53,15 @@ maindir_files <- paste0(maindir,'/files')
 nbUrls <- nrow(datasetAll)
 p <- 1
 #Create a column year to order the directories
-datasetAll['year'] = lapply(test['Document date'], function(x) str_extract(x, "[0-9]{4}"))
+datasetAll['year'] = lapply(datasetAll['Document date'], function(x) str_extract(x, "[0-9]{4}"))
 #We loop the dataset to get the document
 #Before we check if the subdirectory year and the subdirectory language exist. If not we create them.
 
 while (p < nbUrls+1){
+  print(paste0('Je DL le fichier ',p,' sur ',nbUrls,' au total'))
   output_dir <- paste0(maindir_files,'/',datasetAll$year[p])
   file <-unlist(datasetAll['URL'][[1]][p])
-  filename <- paste0(basename(file),'.pdf')
+  filename <- basename(file)
   #creation of the 1st level of subdir
   if (!dir.exists(output_dir)){
     dir.create(output_dir)
@@ -74,6 +75,7 @@ while (p < nbUrls+1){
   download.file(file, destfile = filenamedir, method = "wget")
   #we pause more or less 1.5s between every DL
   Sys.sleep(runif(1, 1, 2))
+  gc()
   p <-p+1
 }
 
