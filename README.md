@@ -31,7 +31,7 @@ Files are downloaded in a subdirectory called 'files', by year of issue and by l
 ## Some comments
 
 Apart from the xpath/css trick, some more comments : 
-* you should modify the directories is the script with your own directories.
+* You should modify the directories is the script with your own directories.
 * It's a good idea to use basename() to get the name of the file. Seems trivial, but...
 * `download.file()` can use several methods (curl, wget, libcurl, etc...). the best way is to pass the 'auto' parameter
 * But most important, download.file() has a user-agent spoofing hability. 
