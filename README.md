@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://www.stl-tsl.org/themes/stl/images/STL_EnglishLogo.svg" title="STL-TSL Logo">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Emblem_of_the_Special_Tribunal_for_Lebanon.svg/275px-Emblem_of_the_Special_Tribunal_for_Lebanon.svg.png?uselang=fr" title="STL-TSL Logo">
  </p>
 
 # TPL_Scrape
