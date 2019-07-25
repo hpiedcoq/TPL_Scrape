@@ -3,7 +3,7 @@ A R script using Selenium to scrape data from the Special Tribunal for Lebanon.
 
 ## What's the purpose of the script
 
-The TPL offers all its decisions concerning a case to be browsed and downloaded.
+The STL offers all its decisions concerning a case to be browsed and downloaded.
 The main issue is that for some cases, a lot of documents is available : many pages on the website, each page containing 20 decisions which contains themselves between 1 and 20 or more documents.
 
 ## What do we need
