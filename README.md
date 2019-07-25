@@ -34,7 +34,7 @@ Apart from the xpath/css trick, some more comments :
 * You should modify the directories is the script with your own directories.
 * It's a good idea to use basename() to get the name of the file. Seems trivial, but...
 * `download.file()` can use several methods (curl, wget, libcurl, etc...). the best way is to pass the 'auto' parameter
-* But most important, download.file() has a user-agent spoofing hability. 
+* But most important, `download.file()` has a user-agent spoofing hability. 
 Just pass the 
 `options(HTTPUserAgent='Mozilla/5.0 (X11; Linux i686 on x86_64; rv:10.0) Gecko/20100101 Firefox/68.0')`
 option before. Otherwise, it won't work, as the STL server detects the non-standard user-agents.
