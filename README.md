@@ -19,6 +19,7 @@ Using xpath to select elements on this kind of website can really be a pain in t
 
 I wrote this script using R and Selenium.
 You need to have the Selenium server working in the background.
+File are downloaded in a subdirectory calle 'files', by year of issue and by language.
 
 ## Enhancement
 
