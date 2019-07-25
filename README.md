@@ -1,8 +1,5 @@
 # TPL_Scrape
 A R script using Selenium to scrape data from the Special Tribunal for Lebanon.
-!(https://www.stl-tsl.org/themes/stl/images/STL_EnglishLogo.svg)
-
-
 
 ## What's the purpose of the script
 
