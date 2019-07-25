@@ -1,5 +1,8 @@
 # TPL_Scrape
 A R script using Selenium to scrape data from the Special Tribunal for Lebanon.
+![Special Tribunal for Lebanon logo](https://www.stl-tsl.org/themes/stl/images/STL_EnglishLogo.svg)
+
+
 
 ## What's the purpose of the script
 
@@ -19,19 +22,23 @@ Using xpath to select elements on this kind of website can really be a pain in t
 
 I wrote this script using R and [Selenium](https://www.seleniumhq.org/download/).
 You need to have the Selenium server working in the background.
-Files are downloaded in a subdirectory calle 'files', by year of issue and by language.
+The script has two parts : 
+* First it collects all the metadata of the documents, and creates a csv file with it.
+* Then, it downloads all the files, based on this csv file.
+Files are downloaded in a subdirectory called 'files', by year of issue and by language.
 
 ## Some comments
 
 Apart from the xpath/css trick, some more comments : 
-
-- It's a good idea to use basename() to get the name of the file. Seems trivial, but...
-- download.file() can use several methods (curl, wget, libcurl, etc...). the best way is to pass the 'auto' parameter
-- But most important, download.file() has a user-agent spoofing hability. 
+* you should modify the directories is the script with your own directories.
+* It's a good idea to use basename() to get the name of the file. Seems trivial, but...
+* download.file() can use several methods (curl, wget, libcurl, etc...). the best way is to pass the 'auto' parameter
+* But most important, download.file() has a user-agent spoofing hability. 
 Just pass the "options(HTTPUserAgent='Mozilla/5.0 (X11; Linux i686 on x86_64; rv:10.0) Gecko/20100101 Firefox/68.0')" option before. Otherwise, it won't work, as the STL server detects the non-standard user-agents.
-- Do behave with server requests. Tempos between two downloads are useful.
-- R doesn't automatically deal with the garbage collector, that's why I often do a gc() (... at every loop).
-- I also always use a testcon() function on my scraping scripts, in order to only send a request if the internet connexion is up.
+* Do behave with server requests. Tempos between two downloads are useful.
+* R doesn't automatically deal with the garbage collector, that's why I often do a gc() (... at every loop).
+* I also always use a testcon() function on my scraping scripts, in order to only send a request if the internet connexion is up.
+* A [dataset](https://github.com/hpiedcoq/TPL_Scrape/raw/master/DatasetAll.csv) is included in the repo.
 
 ## Enhancement
 
