@@ -1,0 +1,89 @@
+setwd("~/Téléchargements/tpl-scrape/TPL_Scrape")
+maindir <- getwd()
+datadir <-'/media/ubuntu/68ACCD52ACCD1B86/TPL'
+source('constantes.R')
+Sys.sleep(runif(1, 1.5, 5))
+
+#Open Connection with displayed browse. Good for debugging
+remDr <- remoteDriver(remoteServerAddr = "0.0.0.0"
+                      , port = 4444
+                      , browserName = "firefox"
+                      )
+
+
+# #Open Connection headless
+# remDr <- remoteDriver(remoteServerAddr = "0.0.0.0"
+#                       , port = 4444
+#                       , browserName = "firefox"
+#                       , extraCapabilities = list(
+#                         "moz:firefoxOptions" = list(
+#                           args = list('--headless')))
+# )
+
+remDr$open()
+remDr$navigate(url_base)
+Sys.sleep(runif(1, 1.5, 2))
+
+#We create the original dataset based on the first page.
+source('tpl_scrape_pages_urls2.R')
+purlvalue <-2
+#At this step we collected all the information for the first page.
+#Now we iterate the whole website by scraping the following URLs
+datasetAll <- dataset_file
+
+while (purlvalue < pmaxvalue){
+  print(paste0('Je traite la page ',purlvalue))
+  while(!testCon()){
+    print('internet est Down, on fait une pause de 5s') 
+    Sys.sleep(5)
+  }
+  nextpage <- remDr$findElement(using = "xpath", '//*[@class="page-link next"]') 
+  nextpage$clickElement()
+  Sys.sleep(runif(1, 1.5, 2))
+  source('tpl_scrape_pages_urls2.R')
+  datasetAll <- bind_rows(datasetAll,dataset_file)
+  gc()
+  purlvalue <- purlvalue +1
+}
+write.csv(datasetAll,file = "datasetAll.csv")
+
+#Let's prepare for mass download
+#We create a directory called files
+dir.create('/media/ubuntu/68ACCD52ACCD1B86/TPL/files')
+maindir_files <- paste0(datadir,'/files')
+nbUrls <- nrow(datasetAll)
+p <- 1
+#Create a column year to order the directories
+datasetAll['year'] = lapply(datasetAll['Document date'], function(x) str_extract(x, "[0-9]{4}"))
+#We loop the dataset to get the document
+#Before we check if the subdirectory year and the subdirectory language exist. If not we create them.
+
+while (p < nbUrls+1){
+  print(paste0('Je DL le fichier ',p,' sur ',nbUrls,' au total'))
+  output_dir <- paste0(maindir_files,'/',datasetAll$year[p])
+  file <-unlist(datasetAll['URL'][[1]][p])
+  filename <- basename(file)
+  #creation of the 1st level of subdir
+  if (!dir.exists(output_dir)){
+    dir.create(output_dir)
+  }
+  #creation of the second level of subdir
+  output_dir <- paste0(output_dir,'/',unlist(datasetAll['Langue Document'][[1]][p]))
+  if (!dir.exists(output_dir)){
+    dir.create(output_dir)
+  }
+  filenamedir <-paste0(output_dir,'/',filename)
+  options(HTTPUserAgent='Mozilla/5.0 (X11; Linux i686 on x86_64; rv:10.0) Gecko/20100101 Firefox/68.0')
+  while(!testCon()){
+    print('internet est Down, on fait une pause de 5s') 
+    Sys.sleep(5)
+  }
+  download.file(file, destfile = filenamedir, method = "libcurl")
+  #we pause more or less 1.5s between every DL
+  Sys.sleep(runif(1, 2, 3))
+  gc()
+  p <-p+1
+}
+
+
+
