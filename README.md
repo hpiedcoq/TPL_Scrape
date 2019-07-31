@@ -45,7 +45,7 @@ option before. Otherwise, it won't work, as the STL server detects the non-stand
 
 ## Enhancement
 
-This code should be optimized by scraping the xhr json on every page, and justin parsing it.
+This code should be optimized by scraping the xhr json on every page, and just parsing it.
 This done, you don't have to render anything in a browser. 
 But I didn't manage to do it.
 
